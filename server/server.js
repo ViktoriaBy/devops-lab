@@ -21,6 +21,23 @@ app.get('/api/todos', (req, res) => {
     res.status(200).send(todos)
 })
 
+
+app.get('/api/todos/:id', (req, res) =>{
+    const id = +req.params.id;
+
+    if(id <0 || id >= todos.length){
+        if(id < 0){
+            rollbar.error(`Someone tried to get an index less than 0`)
+
+        }else{
+    rollbar.error(`Someone tried to get an inde above out of range`)
+        }
+        return res.sendStatus(400);
+    }
+    res.status(200).send(todos[id])
+})
+
+
 app.post('/api/todos', (req, res) => {
     const { toDoItem } = req.body
     todos.unshift(toDoItem) //put new name at beginning at array
