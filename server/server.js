@@ -22,24 +22,20 @@ app.get('/api/todos', (req, res) => {
 })
 
 app.post('/api/todos', (req, res) => {
-    const { name } = req.body
-    todos.unshift(name) //put new name at beginning at array
+    const { toDoItem } = req.body
+    todos.unshift(toDoItem) //put new name at beginning at array
 rollbar.critical('Someone tried to add a todo!')
     res.status(200).send(todos)
 })
 
+
+
 app.delete('/api/todos/:id', (req, res) => {
-    if (req.params.id === '0'){
-        rollbar.critical('Someone tried to delete a todo!')
-        return res.status(403).send(todos)
-    }
+    const targetIndex = +req.params.index
+ rollbar.critical('Someone tried to delete a todo!')
+    todos.splice(targetIndex, 1);
 
     rollbar.warning(`Someone deleted the  ${todos[+req.params.id]} todo`)
-
-    todos.splice(+req.params.id, 1) //DELETES STUDENT ID FROM ARRAY
-
-    
-
     res.status(200).send(todos)
 })
 

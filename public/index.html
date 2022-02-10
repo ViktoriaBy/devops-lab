@@ -28,8 +28,8 @@
                 container.innerHTML = ''
                 toDoInput.value = ''
     
-                res.data.forEach((toDoitem, index) => {
-                    container.innerHTML += `<p name=${index}>${toDoitem}</p>`
+                res.data.forEach((toDoItem, index) => {
+                    container.innerHTML += `<p name=${index}>${toDoItem}</p>`
                 })
     
                 document.querySelectorAll('p').forEach(element => {
@@ -49,12 +49,12 @@
                 evt.preventDefault();
     
                 axios
-                    .post('/api/todos', { name: toDoInput.value })
+                    .post('/api/todos', { toDoItem: toDoInput.value })
                     .then(res => {
                         putTheThingInTheView(res)
                     })
                     .catch(err => {
-                        nameInput.value = ''
+                        toDoInput.value = ''
     
                         const notif = document.createElement('aside')
                         notif.innerHTML = `<p>${err.response.data}</p>
@@ -69,13 +69,14 @@
                     })
             }
     
-            // get student list on initial load
+            // get item list on initial load
             axios
                 .get('/api/todos')
                 .then(res => {
                     putTheThingInTheView(res)
                 })
     
+
             addForm.addEventListener('submit', submitHandler)
         </script>
     </body>
