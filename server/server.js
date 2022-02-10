@@ -17,20 +17,20 @@ const todos = ['Clean the house', 'Walk the dog', 'Eat some candy', 'Water the p
 
 //ENDPOINT
 app.get('/api/todos', (req, res) => {
-    rollbar.info('Someone got all the students')
+    
     res.status(200).send(todos)
 })
 
 app.post('/api/todos', (req, res) => {
     const { name } = req.body
     todos.unshift(name) //put new name at beginning at array
-
+rollbar.error('Someone tried to add a todo!')
     res.status(200).send(todos)
 })
 
 app.delete('/api/todos/:id', (req, res) => {
     if (req.params.id === '0'){
-        rollbar.error('Someone tried to delete the first student!')
+        rollbar.error('Someone tried to delete a todo!')
         return res.status(403).send(todos)
     }
 
